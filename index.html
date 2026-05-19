@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>PAI-Actor: Cinematic Multi-Character Replacement in Dynamic Scenes</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;700&display=swap');
+        body { font-family: "Google Sans", "Open Sans", sans-serif; font-weight: 300; background-color: #fff; margin: 0; padding: 0; }
+        .content { width: 1000px; padding: 25px 50px; margin: 25px auto; background-color: white; box-shadow: 0px 0px 10px #999; border-radius: 15px; }
+        h1 { text-align: center; font-size: 35px; font-weight: 300; }
+        h2 { font-size: 30px; font-weight: 300; text-align: center; }
+        h3 { font-size: 22px; font-weight: 400; text-align: center; color: #444; }
+        p { line-height: 25px; text-align: justify; }
+        a, a:visited { color: #224b8d; font-weight: 300; }
+        #authors { text-align: center; margin-bottom: 20px; font-size: 20px; }
+        #authors a { margin: 0 10px; }
+        .summary-img { display: block; margin-left: auto; margin-right: auto; }
+        .btn-row { text-align: center; margin-top: 20px; }
+        .btn-row a {
+            display: inline-flex; align-items: center; vertical-align: middle;
+            padding: 6px 18px; margin: 5px; background: #333; color: white;
+            border-radius: 20px; text-decoration: none; font-size: 15px;
+        }
+        .btn-row a:hover { background: #555; color: white; }
+        .btn-row a i { margin-right: 6px; font-size: 18px; }
+        .btn-row a.disabled { background: #888; cursor: not-allowed; pointer-events: none; opacity: 0.7; }
+        video { width: 100%; border-radius: 8px; }
+        .feature-table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 15px 0; }
+        .feature-table th { background: #e6e6e6; padding: 8px; text-align: center; font-size: 13px; }
+        .feature-table td { padding: 6px 8px; text-align: center; border-bottom: 1px solid #eee; }
+        .feature-table tr.ours { background: #d0e8ff; font-weight: 700; }
+        .check { color: #2e7d32; }
+        .cross { color: #c62828; }
+        .two-col { display: flex; gap: 15px; align-items: flex-start; }
+        .two-col > div { flex: 1; }
+        .two-col img { width: 100%; }
+        @media (max-width: 1100px) { .content { width: 90%; padding: 20px; } }
+        @media (max-width: 700px) { .two-col { flex-direction: column; } }
+    </style>
+</head>
+<body>
+
+<div class="content">
+    <h1><strong>PAI-Actor: Cinematic Multi-Character Replacement in Dynamic Scenes</strong></h1>
+
+    <p id="authors">
+        <span>Anonymous Authors</span>
+        <br><br>
+        <span style="font-size:18px;">
+            Under Review at NeurIPS 2026
+        </span>
+    </p>
+
+    <div class="btn-row">
+        <a class="disabled"><i class="ai ai-arxiv"></i> Paper (Under Review)</a>
+        <a class="disabled"><i class="fa-brands fa-github"></i> Code (Coming Soon)</a>
+    </div>
+
+    <div style="margin-top: 25px;">
+        <video autoplay loop muted playsinline>
+            <source src="static/teaser.mp4" type="video/mp4">
+        </video>
+        <p style="text-align: center; font-size: 14px; color: #666; margin-top: 8px;">
+            Given a source video and a reference image per character, PAI-Actor replaces characters in cinematic dynamic scenes while preserving background, camera motion, and pose-accurate reenactment at 1080P resolution.
+        </p>
+    </div>
+</div>
+
+<div class="content">
+    <h2>Abstract</h2>
+    <p>
+        We present PAI-Actor, a cinematic multi-character animation framework for character replacement in dynamic movie scenes. Unlike conventional animation systems that mainly drive a single static image or a single subject, our goal is to replace and animate multiple characters within real video clips while preserving the original scene dynamics, camera motion, and background content. This setting is particularly challenging because the generated characters must remain consistent with the source performance in motion and interaction, while also matching the surrounding background in lighting, shadow, composition, and overall cinematic appearance. To address this, we formulate multi-character animation as a structure-guided human recovery problem and build a movie-driven training pipeline from high-quality film data. Furthermore, to support practical cinematic production, we introduce a bidirectional-to-autoregressive distillation framework: we first train a bidirectional diffusion transformer for high-quality short-clip generation at 1080P resolution, and then distill it into an autoregressive video-to-video model for efficient inference and longer video generation. Experiments show that PAI-Actor enables high-fidelity multi-character animation with strong scene consistency, cinematic visual quality, and efficient long-form generation.
+    </p>
+</div>
+
+<div class="content">
+    <h2>Feature Comparison</h2>
+    <table class="feature-table">
+        <tr>
+            <th>Feature</th>
+            <th>Wan-Animate</th>
+            <th>MultiAnimate</th>
+            <th>SCAIL</th>
+            <th>DOMO</th>
+            <th>Viggle</th>
+            <th>Kling O1</th>
+            <th>MoCha</th>
+            <th>Ours</th>
+        </tr>
+        <tr>
+            <td>1080P</td>
+            <td class="cross">&#10007;</td><td class="cross">&#10007;</td><td class="cross">&#10007;</td><td class="cross">&#10007;</td>
+            <td class="check">&#10003;</td><td class="check">&#10003;</td><td class="check">&#10003;</td>
+            <td class="check">&#10003;</td>
+        </tr>
+        <tr>
+            <td>Multi-Character</td>
+            <td class="cross">&#10007;</td><td class="check">&#10003;</td><td class="check">&#10003;</td><td class="check">&#10003;</td>
+            <td class="check">&#10003;</td><td class="check">&#10003;</td><td class="cross">&#10007;</td>
+            <td class="check">&#10003;</td>
+        </tr>
+        <tr>
+            <td>Long-Video Output (&gt;10s)</td>
+            <td class="cross">&#10007;</td><td class="cross">&#10007;</td><td class="cross">&#10007;</td><td class="check">&#10003;</td>
+            <td class="check">&#10003;</td><td class="check">&#10003;</td><td class="cross">&#10007;</td>
+            <td class="check">&#10003;</td>
+        </tr>
+        <tr>
+            <td>Pose-Driven Control</td>
+            <td class="check">&#10003;</td><td class="check">&#10003;</td><td class="check">&#10003;</td><td class="check">&#10003;</td>
+            <td class="cross">&#10007;</td><td class="check">&#10003;</td><td class="cross">&#10007;</td>
+            <td class="check">&#10003;</td>
+        </tr>
+        <tr>
+            <td>Background Preservation</td>
+            <td class="check">&#10003;</td><td class="cross">&#10007;</td><td class="cross">&#10007;</td><td class="check">&#10003;</td>
+            <td class="check">&#10003;</td><td class="check">&#10003;</td><td class="check">&#10003;</td>
+            <td class="check">&#10003;</td>
+        </tr>
+        <tr class="ours">
+            <td>Occlusion Handling</td>
+            <td class="cross">&#10007;</td><td class="cross">&#10007;</td><td class="cross">&#10007;</td><td class="cross">&#10007;</td>
+            <td class="cross">&#10007;</td><td class="cross">&#10007;</td><td class="cross">&#10007;</td>
+            <td class="check">&#10003;</td>
+        </tr>
+    </table>
+    <p style="text-align: center; font-size: 14px; color: #666; margin-top: 8px;">
+        Feature comparison between PAI-Actor and existing character-replacement approaches. PAI-Actor is the only method that jointly supports 1080P resolution, multi-character animation, long-form generation, pose-driven control, background preservation, and complex occlusion handling.
+    </p>
+</div>
+
+<div class="content">
+    <h2>Method</h2>
+    <img class="summary-img" src="static/method.png" style="width:100%" alt="Method overview">
+    <p style="text-align: center; font-size: 14px; color: #666; margin-top: 8px;">
+        Overview of the PAI-Actor framework. We cast multi-character animation as a structure-guided human recovery problem: original performers are masked out from movie clips, structured pose and face signals are rendered on the masked regions, and a diffusion transformer recovers the complete characters in the original video space. A bidirectional-to-autoregressive distillation strategy first trains a bidirectional teacher for 1080P short-clip quality, then distills it into an autoregressive video-to-video generator for efficient long-form synthesis.
+    </p>
+</div>
+
+<div class="content">
+    <h2>Generation Results</h2>
+    <video autoplay loop muted playsinline>
+        <source src="static/showcase.mp4" type="video/mp4">
+    </video>
+    <p style="text-align: center; font-size: 14px; color: #666; margin-top: 8px;">
+        Cinematic multi-character replacement results across diverse movie scenes. Generated characters preserve source-video motion, interaction, and camera dynamics while matching the surrounding scene lighting and composition.
+    </p>
+</div>
+
+<div class="content">
+    <h2>Comparison with Baselines</h2>
+    <video autoplay loop muted playsinline>
+        <source src="static/compare.mp4" type="video/mp4">
+    </video>
+    <p style="text-align: center; font-size: 14px; color: #666; margin-top: 8px;">
+        Qualitative comparison against existing character-replacement systems. Baselines struggle with identity drift, background distortion, occlusion failures, and resolution degradation. PAI-Actor produces clean, identity-consistent, occlusion-aware replacements that preserve the original cinematic scene.
+    </p>
+</div>
+
+<div class="content">
+    <h2>Ablation Study</h2>
+    <video autoplay loop muted playsinline>
+        <source src="static/ablation.mp4" type="video/mp4">
+    </video>
+    <p style="text-align: center; font-size: 14px; color: #666; margin-top: 8px;">
+        Ablation on key components of PAI-Actor, including the structure-guided recovery formulation, movie-driven training data, and the bidirectional-to-autoregressive distillation. Each component contributes to final motion fidelity, identity preservation, and scene consistency.
+    </p>
+</div>
+
+<div class="content">
+    <h2>Long-Form Video Generation</h2>
+    <video autoplay loop muted playsinline>
+        <source src="static/supp_animation.mp4" type="video/mp4">
+    </video>
+    <p style="text-align: center; font-size: 14px; color: #666; margin-top: 8px;">
+        After distillation, PAI-Actor extends beyond short 4-second teacher clips and produces temporally coherent long-form character replacement, suitable for practical cinematic production.
+    </p>
+</div>
+
+<div class="content">
+    <h2>Character Swap Demonstrations</h2>
+    <video autoplay loop muted playsinline>
+        <source src="static/supp_swap.mp4" type="video/mp4">
+    </video>
+    <p style="text-align: center; font-size: 14px; color: #666; margin-top: 8px;">
+        Given a single reference image per identity, PAI-Actor swaps multiple characters within the same scene while preserving the source performance and the surrounding cinematic context.
+    </p>
+</div>
+
+<div class="content">
+    <h2>User Study</h2>
+    <div class="two-col">
+        <div>
+            <img src="static/radar_combined.png" alt="Radar combined">
+            <p style="text-align: center; font-size: 13px; color: #666; margin-top: 6px;">
+                Per-metric radar across all baselines.
+            </p>
+        </div>
+        <div>
+            <img src="static/userstudy_4metrics.png" alt="User study 4 metrics">
+            <p style="text-align: center; font-size: 13px; color: #666; margin-top: 6px;">
+                User preference across four perceptual metrics.
+            </p>
+        </div>
+    </div>
+    <div class="two-col" style="margin-top: 10px;">
+        <div>
+            <img src="static/radar_single.png" alt="Single-character radar">
+            <p style="text-align: center; font-size: 13px; color: #666; margin-top: 6px;">
+                Single-character setting.
+            </p>
+        </div>
+        <div>
+            <img src="static/radar_multi.png" alt="Multi-character radar">
+            <p style="text-align: center; font-size: 13px; color: #666; margin-top: 6px;">
+                Multi-character setting.
+            </p>
+        </div>
+    </div>
+    <p style="text-align: center; font-size: 14px; color: #666; margin-top: 12px;">
+        Human evaluation across 15 users covering motion fidelity, identity preservation, background consistency, and cinematic quality. PAI-Actor is consistently preferred over open-source and commercial baselines in both single- and multi-character settings.
+    </p>
+</div>
+
+
+</body>
+</html>
